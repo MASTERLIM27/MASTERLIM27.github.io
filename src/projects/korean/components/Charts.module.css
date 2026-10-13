@@ -1,0 +1,163 @@
+.h3 {
+  font-size: var(--step-3);
+}
+
+.body {
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+
+.note {
+  color: var(--ink-3);
+  font-size: var(--step--2);
+}
+
+/* ---------- The four test results ---------- */
+.resultGrid {
+  list-style: none;
+  margin: 0 0 clamp(56px, 7vw, 96px);
+  padding: 0;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 640px) {
+  .resultGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .resultGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.resultCard {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 20px 20px 22px;
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--accent);
+  border-radius: 4px 4px 12px 12px;
+  background: var(--char-1);
+}
+
+/* The two results about the learner's converted voice use the learner color. */
+.resultCard[data-id="similarityGain"],
+.resultCard[data-id="phoneme"] {
+  border-top-color: var(--learner);
+}
+
+.resultValue {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 1.8rem + 2vw, 3.25rem);
+  font-weight: 650;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.resultUnit {
+  color: var(--ink-3);
+  font-size: var(--step--2);
+}
+
+.resultK {
+  margin-top: 12px;
+  font-family: var(--font-text);
+  font-size: var(--step-0);
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+.resultN {
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.resultP {
+  margin-top: 6px;
+  color: var(--ink-2);
+  font-size: var(--step--1);
+}
+
+.formulas {
+  display: grid;
+  gap: 16px;
+  margin-bottom: clamp(56px, 7vw, 96px);
+}
+
+.formulas ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.formulas li {
+  display: grid;
+  gap: 6px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+html:lang(ko) .formulas li {
+  font-family: var(--font-text);
+}
+
+.perNote {
+  color: var(--ink-3);
+  font-family: var(--font-text);
+  font-size: var(--step--2);
+}
+
+/* ---------- Text beside a figure ---------- */
+.block {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 1000px) {
+  .block {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    gap: 56px;
+    align-items: start;
+  }
+}
+
+.blockText {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+/* Figures reproduced from the paper, on a light card as printed */
+.paperFigure {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.paperFigure img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: clamp(6px, 1vw, 12px);
+}
+
+.paperFigure figcaption {
+  color: var(--ink-3);
+  font-size: var(--step--2);
+}

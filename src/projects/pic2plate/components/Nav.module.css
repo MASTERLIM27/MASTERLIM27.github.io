@@ -1,0 +1,142 @@
+.bar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  height: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) var(--gutter) 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.bar[data-solid="true"] {
+  background: rgba(0, 0, 0, 0.92);
+  border-bottom-color: var(--line);
+}
+
+@supports (backdrop-filter: blur(8px)) {
+  .bar[data-solid="true"] {
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(14px);
+  }
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.1875rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.links {
+  display: flex;
+  gap: clamp(16px, 2.4vw, 32px);
+  font-size: var(--step--1);
+}
+
+.links a {
+  color: var(--ink-2);
+  text-decoration: none;
+  padding-block: 8px;
+}
+
+.links a:hover {
+  color: var(--ink);
+}
+
+.lang {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 3px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+}
+
+.langButton {
+  min-height: 30px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-3);
+  font-size: var(--step--2);
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.langButton[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--black);
+}
+
+.langButton[aria-pressed="false"]:hover {
+  color: var(--ink);
+}
+
+@media (max-width: 760px) {
+  .links {
+    display: none;
+  }
+}
+
+/* Added for the merged portfolio: the link back to the landing page. */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--step--1);
+  color: var(--ink-3);
+  text-decoration: none;
+  white-space: nowrap;
+  padding-block: 8px;
+  padding-inline-end: 2px;
+  border-inline-end: 1px solid var(--line-strong);
+  padding-inline-end: 18px;
+  transition: color 160ms ease;
+}
+
+.back:hover {
+  color: var(--ink);
+}
+
+.backArrow {
+  font-size: 1em;
+  line-height: 1;
+  transition: transform 160ms ease;
+}
+
+.back:hover .backArrow {
+  transform: translateX(-2px);
+}
+
+@media (max-width: 460px) {
+  .back {
+    font-size: var(--step--2);
+    padding-inline-end: 12px;
+  }
+}
+
+/* Matches the other two project bars; on a phone the bar gives up the back link's word (its aria-label still
+   names it) to keep the language toggle on screen. */
+@media (max-width: 460px) {
+  .bar {
+    gap: 12px;
+  }
+
+  .brand {
+    font-size: 0.9375rem;
+    gap: 8px;
+  }
+
+  .backLabel {
+    display: none;
+  }
+}

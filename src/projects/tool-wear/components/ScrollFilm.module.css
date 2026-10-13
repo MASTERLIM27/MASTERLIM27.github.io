@@ -1,0 +1,541 @@
+.film {
+  --len: 8;
+  position: relative;
+  height: calc(var(--len) * 100vh);
+}
+
+@media (max-aspect-ratio: 6/5) {
+  .film {
+    --len: 7.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film {
+    --len: 6;
+  }
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background-color: var(--black);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Before the script lays things out, match the portrait framing it will use. */
+@media (max-aspect-ratio: 6/5) {
+  .sticky {
+    background-size: 100% auto;
+    background-position: center max(64px, 10svh);
+  }
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* The drawn picture's box. Overlays are positioned in it as fractions of the picture,
+   and in portrait its top and bottom edges fade into the page black. */
+.imageRect {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.sticky[data-layout="portrait"] .imageRect::before,
+.sticky[data-layout="portrait"] .imageRect::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 14%;
+}
+
+.sticky[data-layout="portrait"] .imageRect::before {
+  top: -1px;
+  background: linear-gradient(to bottom, var(--black), transparent);
+}
+
+.sticky[data-layout="portrait"] .imageRect::after {
+  bottom: -1px;
+  background: linear-gradient(to top, var(--black), transparent);
+}
+
+.imageRect[data-labels="hide"] .signalTag,
+.imageRect[data-labels="hide"] .netTag,
+.imageRect[data-labels="hide"] .hud {
+  display: none;
+}
+
+/* Signal names on the four ribbon bundles */
+.signalTag {
+  position: absolute;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 9px 4px 8px;
+  border: 1px solid var(--accent-line);
+  border-radius: 3px;
+  background: var(--overlay);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  transform: translate(0, -50%) translateX(-6px);
+  opacity: 0;
+  transition:
+    opacity 320ms ease,
+    transform 320ms ease;
+}
+
+.signalTag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.imageRect[data-signals="on"] .signalTag {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+/* Layer sizes under the network */
+.netTag {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  gap: 4px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 320ms ease,
+    transform 320ms ease;
+}
+
+.netTag code {
+  color: var(--accent);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 18px rgba(0, 0, 0, 0.9);
+}
+
+.netLabel {
+  color: var(--ink-2);
+  font-size: 0.75rem;
+}
+
+.imageRect[data-net="on"] .netTag {
+  opacity: 1;
+  transform: none;
+}
+
+/* Alarm readout: opacity is driven by the frame index, see ScrollFilm.tsx */
+.hud {
+  position: absolute;
+  z-index: 1;
+  width: 15rem;
+  padding: 12px 14px 12px 16px;
+  border: 1px solid var(--alert-line);
+  border-left: 3px solid var(--alert);
+  border-radius: 6px;
+  background: var(--overlay-alert);
+  opacity: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.hud p {
+  margin: 0;
+}
+
+.hudTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.hudDot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--alert);
+  box-shadow: 0 0 10px var(--alert);
+}
+
+.hudStatus {
+  margin-left: auto;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--alert);
+  color: var(--on-alert);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.hudHealth {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 650;
+  font-stretch: 104%;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.hudLine {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+}
+
+.hudNote {
+  margin-top: 4px !important;
+  color: var(--ink-3);
+  font-size: 0.6875rem;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      80% 82% at 0% 100%,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.86) 30%,
+      rgba(0, 0, 0, 0.5) 52%,
+      rgba(0, 0, 0, 0) 74%
+    ),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 120px);
+}
+
+.sticky[data-layout="portrait"] .scrim {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 96px);
+}
+
+.dim {
+  position: absolute;
+  inset: 0;
+  background: var(--black);
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+/* Title card */
+.titleCard {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: clamp(14px, 2vh, 22px);
+  padding: var(--nav-h) var(--gutter) 96px;
+  text-align: center;
+}
+
+.sticky[data-layout="portrait"] .titleCard {
+  place-content: start center;
+  padding-top: var(--text-top);
+}
+
+.title {
+  font-size: clamp(2.75rem, 0.9rem + 6.6vw, 6.5rem);
+  font-weight: 700;
+  font-stretch: 108%;
+  letter-spacing: -0.03em;
+  line-height: 0.98;
+}
+
+html:lang(ko) .title {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.subtitle {
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.8),
+    0 0 24px rgba(0, 0, 0, 0.8);
+  max-width: 30ch;
+  font-size: clamp(1.125rem, 0.9rem + 1vw, 1.625rem);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+html:lang(ko) .subtitle {
+  letter-spacing: -0.03em;
+}
+
+.paperLine {
+  display: grid;
+  gap: 6px;
+  max-width: 46ch;
+  color: var(--ink-2);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.9),
+    0 0 18px rgba(0, 0, 0, 0.9);
+}
+
+.venue {
+  color: var(--ink-3);
+  font-size: var(--step--2);
+}
+
+.scrollCue {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  color: var(--ink-3);
+  font-size: var(--step--2);
+}
+
+.cueLine {
+  position: relative;
+  width: 1px;
+  height: 36px;
+  background: var(--line-strong);
+  overflow: hidden;
+}
+
+.cueLine::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -12px;
+  width: 1px;
+  height: 12px;
+  background: var(--ink);
+  animation: cue 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes cue {
+  to {
+    transform: translateY(48px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cueLine::after {
+    animation: none;
+    top: 12px;
+  }
+  .signalTag,
+  .netTag {
+    transition: none;
+  }
+}
+
+/* Story beats: stacked in one grid cell so the box fits the tallest. */
+.beats {
+  position: absolute;
+  left: var(--gutter);
+  bottom: clamp(40px, 9vh, 104px);
+  width: min(30rem, max(21rem, calc(31vw - 56px)), calc(100% - 2 * var(--gutter)));
+  display: grid;
+  pointer-events: none;
+}
+
+.sticky[data-layout="portrait"] .beats {
+  top: var(--text-top);
+  bottom: auto;
+}
+
+.beat {
+  grid-area: 1 / 1;
+  align-self: end;
+  display: grid;
+  gap: 14px;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.sticky[data-layout="portrait"] .beat {
+  align-self: start;
+}
+
+.beatH {
+  font-size: var(--step-3);
+  text-shadow: 0 1px 24px rgba(0, 0, 0, 0.6);
+}
+
+.beatP {
+  color: var(--ink-2);
+  max-width: 52ch;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.85),
+    0 1px 16px rgba(0, 0, 0, 0.8);
+}
+
+.stage {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-2);
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.stage::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.fields,
+.rule {
+  margin-top: 2px;
+}
+
+/* Shown only when the overlays on the picture are hidden (narrow screens). */
+.inlineNet,
+.inlineHud {
+  display: none;
+  margin: 0;
+}
+
+.inlineNet code {
+  color: var(--accent);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.inlineHud {
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 6px 10px;
+  border: 1px solid var(--alert-line);
+  border-radius: 4px;
+  background: var(--overlay-alert);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--ink);
+}
+
+.sticky[data-labels="hide"] .inlineNet {
+  display: block;
+}
+
+.sticky[data-labels="hide"] .inlineHud {
+  display: inline-flex;
+}
+
+/* Short landscape screens (most laptops): a more compact text block. */
+@media (max-height: 820px) and (min-aspect-ratio: 6/5) {
+  .beats {
+    bottom: clamp(28px, 6vh, 56px);
+    width: min(27rem, max(21rem, calc(31vw - 56px)), calc(100% - 2 * var(--gutter)));
+  }
+  .beat {
+    gap: 10px;
+  }
+  .beatH {
+    font-size: var(--step-2);
+  }
+  .beatP {
+    font-size: var(--step--1);
+    line-height: 1.55;
+  }
+}
+
+@media (max-aspect-ratio: 6/5) and (max-height: 760px) {
+  .beatP {
+    font-size: var(--step--1);
+  }
+  .beatH {
+    font-size: var(--step-2);
+  }
+}
+
+/* Short phones: drop the code samples so the longest beat fits, and the scroll cue,
+   which would crowd the paper line under the title. */
+@media (max-aspect-ratio: 6/5) and (max-height: 720px) {
+  .fields,
+  .rule,
+  .scrollCue {
+    display: none;
+  }
+  .beat {
+    gap: 10px;
+  }
+}
+
+/* Phones turned sideways: no code samples or scroll cue, and a smaller title, so every beat fits. */
+@media (max-height: 500px) and (min-aspect-ratio: 6/5) {
+  .fields,
+  .rule,
+  .scrollCue {
+    display: none;
+  }
+  .titleCard {
+    gap: 10px;
+    padding-bottom: 24px;
+  }
+  .title {
+    font-size: clamp(2.25rem, 1rem + 5vw, 4rem);
+  }
+}
+
+.loading,
+.caption {
+  position: absolute;
+  bottom: 14px;
+  margin: 0;
+  color: var(--ink-3);
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+
+.loading {
+  left: var(--gutter);
+}
+
+.loading[data-done="true"] {
+  display: none;
+}
+
+.caption {
+  right: var(--gutter);
+  max-width: 40ch;
+  text-align: right;
+}
+
+.sticky[data-layout="portrait"] .caption {
+  top: calc(var(--text-top) - 20px);
+  bottom: auto;
+  transform: translateY(-100%);
+  font-size: 0.6875rem;
+}

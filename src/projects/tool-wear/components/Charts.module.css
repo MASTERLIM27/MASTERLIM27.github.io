@@ -1,0 +1,468 @@
+.stack3 {
+  display: grid;
+  gap: clamp(72px, 9vw, 128px);
+}
+
+.h3 {
+  font-size: var(--step-3);
+}
+
+.body {
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+
+.block {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 1000px) {
+  .block {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    gap: 56px;
+    align-items: start;
+  }
+}
+
+.blockText {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.figure {
+  margin: 0;
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+}
+
+.chartTitle {
+  font-size: var(--step--1);
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.note {
+  color: var(--ink-3);
+  font-size: var(--step--2);
+}
+
+/* ---------- Bar rows ---------- */
+.chart {
+  position: relative;
+  display: grid;
+  gap: 0;
+}
+
+.row,
+.axisRow {
+  display: grid;
+  grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+
+.rowLabel {
+  display: grid;
+  gap: 1px;
+  font-size: var(--step--1);
+  line-height: 1.25;
+  min-width: 0;
+}
+
+.rowLabel small code {
+  color: var(--ink-3);
+  font-size: 0.6875rem;
+}
+
+.track {
+  position: relative;
+  height: 38px;
+  background-image: linear-gradient(to right, var(--line) 1px, transparent 1px);
+  border-right: 1px solid var(--line);
+}
+
+.zero {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line-strong);
+}
+
+.bar {
+  position: absolute;
+  top: 11px;
+  height: 16px;
+  border-radius: 0 4px 4px 0;
+  background: var(--grey-b);
+  cursor: default;
+  transition: filter 120ms ease;
+}
+
+.bar[data-neg="true"] {
+  border-radius: 4px 0 0 4px;
+}
+
+.bar[data-emph="true"] {
+  background: var(--accent);
+}
+
+.bar:hover,
+.bar:focus-visible {
+  filter: brightness(1.2);
+}
+
+.barValue {
+  position: absolute;
+  top: 50%;
+  white-space: nowrap;
+  transform: translate(8px, -50%);
+  font-size: 0.75rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  pointer-events: none;
+}
+
+.barValue[data-neg="true"] {
+  transform: translate(calc(-100% - 8px), -50%);
+}
+
+/* ---------- Axis ---------- */
+.axis {
+  position: relative;
+  height: 22px;
+  color: var(--ink-3);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.axis span {
+  position: absolute;
+  top: 4px;
+  white-space: nowrap;
+}
+
+.tickCenter {
+  transform: translateX(-50%);
+}
+
+.direction {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-3);
+  font-size: 0.75rem;
+}
+
+/* ---------- Legend ---------- */
+.legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-size: var(--step--2);
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: var(--grey-b);
+}
+
+.swatch[data-s="accent"] {
+  background: var(--accent);
+}
+
+/* ---------- Tooltip ---------- */
+.tooltip {
+  position: absolute;
+  z-index: 5;
+  min-width: 180px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  background: #0d1216;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.55);
+  transform: translate(-50%, calc(-100% - 12px));
+  pointer-events: none;
+  display: grid;
+  gap: 4px;
+  font-size: 0.8125rem;
+}
+
+.tipTitle {
+  color: var(--ink-3);
+  font-size: 0.75rem;
+  margin-bottom: 2px;
+}
+
+.tipRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.tipRow strong {
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.tipRow span:last-child {
+  color: var(--ink-2);
+}
+
+/* ---------- Tables ---------- */
+.details summary {
+  cursor: pointer;
+  color: var(--ink-2);
+  font-size: var(--step--1);
+  width: fit-content;
+}
+
+.details summary:hover {
+  color: var(--ink);
+}
+
+.details[open] summary {
+  margin-bottom: 12px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--step--1);
+}
+
+.table th,
+.table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+  white-space: nowrap;
+  /* Wrap only at spaces, so a Korean method name such as 로지스틱 회귀 never splits mid-word */
+  overflow-wrap: normal;
+}
+
+.table thead th {
+  color: var(--ink-3);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-bottom-color: var(--line-strong);
+}
+
+.table tbody th,
+.table thead th:first-child {
+  text-align: left;
+  padding-left: 0;
+}
+
+.table tbody th {
+  font-weight: 600;
+  white-space: normal;
+}
+
+.table td {
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.table td[data-best="true"] {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.codeCell {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  text-align: left !important;
+}
+
+/* Table 2 */
+.compare thead th:nth-child(2) {
+  text-align: left;
+}
+
+.classCell {
+  text-align: left !important;
+}
+
+.compare tbody tr[data-first="true"] th,
+.compare tbody tr[data-first="true"] td {
+  border-top: 1px solid var(--line-strong);
+}
+
+.compare tbody tr[data-ours="true"] th {
+  color: var(--accent);
+}
+
+.compare td[data-worn="true"] {
+  color: var(--ink);
+}
+
+/* ---------- Stat tiles ---------- */
+.stats {
+  margin: 8px 0 0;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.stats > div {
+  display: grid;
+  gap: 2px;
+  align-content: start;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.stats > div[data-lead="true"] {
+  border-top-color: var(--accent);
+}
+
+.stats dt {
+  color: var(--ink-3);
+  font-size: var(--step--2);
+}
+
+.stats dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  font-weight: 650;
+  font-stretch: 104%;
+  line-height: 1.2;
+}
+
+.stats dd.statNote {
+  font-family: var(--font-text);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--ink-3);
+}
+
+/* ---------- Figures reproduced from the paper, on a light card as printed ---------- */
+.paperFigure,
+.figPair {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.paperFigure img,
+.pairItem img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: clamp(6px, 1vw, 12px);
+}
+
+.paperFigure figcaption,
+.figPair figcaption {
+  color: var(--ink-3);
+  font-size: var(--step--2);
+}
+
+.softwareBlock {
+  display: grid;
+  gap: 32px;
+}
+
+.pair {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .pair {
+    grid-template-columns: minmax(0, 0.81fr) minmax(0, 1fr);
+  }
+}
+
+.pairItem {
+  display: grid;
+  gap: 8px;
+}
+
+.pairItem p {
+  color: var(--ink-2);
+  font-size: var(--step--2);
+}
+
+@media (max-width: 560px) {
+  .row,
+  .axisRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+  .axisRow > span:first-child {
+    display: none;
+  }
+  .row {
+    margin-top: 6px;
+  }
+}
+
+/* Correlation rows: wider label column for the signal names */
+.corrRow {
+  grid-template-columns: minmax(9rem, 13rem) minmax(0, 1fr);
+}
+
+@media (max-width: 560px) {
+  .corrRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Room for the value label of the longest bar and the outer axis ticks */
+.divTrack {
+  overflow: visible;
+}
+
+.corrRow > :last-child {
+  margin-right: 2.25rem;
+}
+
+@media (max-width: 560px) {
+  .corrRow > :last-child {
+    margin-left: 1.25rem;
+  }
+}
+
+/* Phones: tighter cells, and the method name stays in view while Table 2 scrolls sideways */
+@media (max-width: 560px) {
+  .table th,
+  .table td {
+    padding: 9px 8px;
+  }
+  .compare tbody th,
+  .compare thead th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    padding-right: 10px;
+    background: var(--black);
+    box-shadow: inset -1px 0 0 var(--line);
+  }
+}

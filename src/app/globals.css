@@ -1,0 +1,364 @@
+/*
+  Portfolio globals.
+
+  The three project pages originally each shipped their own globals.css. Those files were
+  near-identical apart from the `:root` token block, so the element resets and helpers below
+  are shared verbatim, and each project's tokens now live in a `.theme-*` block that is
+  applied to a wrapper element on that project's page (see each project's Site.tsx).
+  Because the tokens are custom properties, they inherit down to every component inside
+  the wrapper, so the project components are unchanged.
+
+  `:root` carries the landing page's own tokens: the same dark world, type scale, 1200px
+  frame and 64ch measure as the three projects, in the warm black and gold of the landing
+  page's key art, so the project accents stay the projects'.
+*/
+
+/* ---------------------------------------------------------------- landing tokens */
+:root {
+  color-scheme: dark;
+
+  --black: #070605;
+  --char-1: #0f0e0c;
+  --char-2: #171512;
+  --line: #27241f;
+  --line-strong: #3d382f;
+  --ink: #f4f1ea;
+  --ink-2: #b8b1a4;
+  --ink-3: #8a8375;
+
+  --accent: #e3b55c;
+  --accent-wash: rgba(227, 181, 92, 0.1);
+  --accent-line: rgba(227, 181, 92, 0.42);
+  --on-accent: #171003;
+
+  --grey-b: #615b50;
+  --grey-c: #8f887a;
+
+  /* Each project's signature colour, used only as a small identifying mark on its card. */
+  --tint-korean: #4cc9f0;
+  --tint-pic2plate: #f2a33a;
+  --tint-tool-wear: #43bdf0;
+
+  --font-display:
+    "Archivo Variable", "Archivo", "Pretendard Variable", -apple-system, "Segoe UI", sans-serif;
+  --font-text:
+    "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic",
+    "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* type scale (px at 16px root): 13 / 15 / 17 / 20 / 24 / 28–36 / 36–56 */
+  --step--2: 0.8125rem;
+  --step--1: 0.9375rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: 1.5rem;
+  --step-3: clamp(1.75rem, 1.35rem + 1.3vw, 2.25rem);
+  --step-4: clamp(2.25rem, 1.5rem + 2.6vw, 3.5rem);
+
+  /* Side gutter, widened past a phone's notch in landscape (viewport-fit=cover) */
+  --gutter: max(clamp(16px, 4vw, 40px), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+  --frame: 1200px;
+  --measure: 64ch;
+  --nav-h: 64px;
+  --section-gap: clamp(96px, 12vw, 176px);
+}
+
+/* ------------------------------------------- Korean shadowing tokens (verbatim) */
+/*
+  Layout: a full-bleed sticky film, then one left-aligned reading column (about 64ch)
+  inside a 1200px frame; the diagram, the practice demo and results use the full frame.
+  One dark world: the page black matches the film's studio black. Two voices carry meaning
+  everywhere: cyan is the target speaker (the face box, the original waveform), coral is the
+  learner (your attempt, your score). Blue-leaning neutrals carry everything else.
+*/
+.theme-korean {
+  --black: #07080c;
+  --char-1: #0d0f15;
+  --char-2: #141721;
+  --line: #222634;
+  --line-strong: #343a4d;
+  --ink: #eef0f6;
+  --ink-2: #aab0c2;
+  --ink-3: #7c8297;
+
+  /* target speaker */
+  --accent: #4cc9f0;
+  --accent-wash: rgba(76, 201, 240, 0.1);
+  --accent-line: rgba(76, 201, 240, 0.5);
+  --accent-bright: #a6e9ff;
+  --on-accent: #04161d;
+
+  /* learner */
+  --learner: #ff7a59;
+  --learner-wash: rgba(255, 122, 89, 0.12);
+  --learner-line: rgba(255, 122, 89, 0.55);
+  --on-learner: #230a04;
+
+  /* kept for shared components */
+  --alert: #ff7a59;
+  --alert-wash: rgba(255, 122, 89, 0.12);
+  --alert-line: rgba(255, 122, 89, 0.55);
+  --on-alert: #230a04;
+  --ok: #4fd18b;
+  --ok-line: rgba(79, 209, 139, 0.5);
+
+  --grey-b: #5b6276;
+  --grey-c: #8a90a5;
+
+  --overlay: rgba(7, 8, 12, 0.84);
+  --overlay-alert: rgba(30, 10, 6, 0.88);
+
+  --font-display:
+    "Bricolage Grotesque Variable", "Bricolage Grotesque", "Pretendard Variable", -apple-system, "Segoe UI", sans-serif;
+}
+
+/* ------------------------------------------------- Pic2Plate tokens (verbatim) */
+/*
+  Layout: a full-bleed sticky film, then one left-aligned reading column (about 64ch)
+  inside a 1200px frame; figures and the demo may use the full frame.
+  Single dark world on purpose: the page black is the film's studio black, so the
+  canvas has no visible edge. Saffron is the machine's trace (detections, the winning
+  system, the active step, focus) and is used nowhere else.
+*/
+.theme-pic2plate {
+  --black: #000000;
+  --char-1: #0f0d0c;
+  --char-2: #1a1715;
+  --line: #2c2825;
+  --line-strong: #3d3833;
+  --ink: #f3eee7;
+  --ink-2: #bfb6ab;
+  --ink-3: #8f867c;
+  --saffron: #f2a33a;
+  --saffron-wash: rgba(242, 163, 58, 0.12);
+  --on-saffron: #1c1307;
+  --grey-b: #6e675f;
+  --grey-c: #a69d93;
+
+  /* the shell's own accent follows the project's, so focus rings match the page */
+  --accent: #f2a33a;
+  --accent-wash: rgba(242, 163, 58, 0.12);
+  --accent-line: rgba(242, 163, 58, 0.5);
+  --on-accent: #1c1307;
+
+  --font-display: "Hahmlet Variable", "Hahmlet", "Pretendard Variable", Georgia, serif;
+
+  --step-5: clamp(3.5rem, 1.2rem + 9vw, 9rem);
+
+  /* this project's original gutter did not reserve for the notch */
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+/* ------------------------------------------------- Tool wear tokens (verbatim) */
+/*
+  Layout: a full-bleed sticky film, then one left-aligned reading column (about 64ch)
+  inside a 1200px frame; figures, charts and the live monitor use the full frame.
+  One dark world on purpose: the page black is the film's enclosure black, so the canvas
+  has no visible edge. Cyan is the data layer (signals, the network, measurements) and
+  red is the alarm; both come from the film. Cool steel neutrals carry everything else.
+*/
+.theme-tool-wear {
+  --black: #000000;
+  --char-1: #0a0d10;
+  --char-2: #12171c;
+  --line: #222a31;
+  --line-strong: #33404a;
+  --ink: #edf2f5;
+  --ink-2: #a8b3bc;
+  --ink-3: #7a8791;
+
+  --accent: #43bdf0;
+  --accent-wash: rgba(67, 189, 240, 0.1);
+  --accent-line: rgba(67, 189, 240, 0.5);
+  --on-accent: #03141c;
+
+  --alert: #ff5a52;
+  --alert-wash: rgba(255, 90, 82, 0.1);
+  --alert-line: rgba(255, 90, 82, 0.55);
+  --on-alert: #1d0605;
+  --ok: #3ccf7e;
+  --ok-line: rgba(60, 207, 126, 0.5);
+
+  --grey-b: #5d6973;
+  --grey-c: #8d99a3;
+
+  --overlay: rgba(4, 9, 13, 0.84);
+  --overlay-alert: rgba(24, 6, 6, 0.88);
+
+  --font-display: "Archivo Variable", "Archivo", "Pretendard Variable", -apple-system, "Segoe UI", sans-serif;
+}
+
+/* -------------------------------------------------------------- shared resets */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+
+/*
+  A project page paints its own black over the full viewport; this keeps the colour
+  behind an overscroll bounce matching it too.
+*/
+body:has(.theme-korean) {
+  background: #07080c;
+}
+
+body:has(.theme-pic2plate),
+body:has(.theme-tool-wear) {
+  background: #000000;
+}
+
+/* Pic2Plate's body turned off one Pretendard stylistic set. */
+body:has(.theme-pic2plate) {
+  font-feature-settings: "ss01" 0;
+}
+
+/* The wrapper that carries a project's theme. No transform/overflow/contain here:
+   the project films rely on `position: sticky` inside it. */
+.projectRoot {
+  background: var(--black);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+html:lang(ko) body {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-height: 1.75;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* Each project's display face was set at its own weight, width and leading. */
+.theme-korean :is(h1, h2, h3, h4) {
+  font-weight: 650;
+  font-stretch: 100%;
+}
+
+.theme-pic2plate :is(h1, h2, h3, h4) {
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+
+.theme-tool-wear :is(h1, h2, h3, h4) {
+  font-weight: 650;
+  font-stretch: 106%;
+}
+
+html:lang(ko) :is(h1, h2, h3) {
+  letter-spacing: -0.035em;
+  line-height: 1.22;
+}
+
+html:lang(ko) .theme-pic2plate :is(h1, h2, h3) {
+  letter-spacing: -0.03em;
+  line-height: 1.22;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+code,
+pre,
+kbd {
+  font-family: var(--font-mono);
+  font-variant-ligatures: none;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  left: var(--gutter);
+  top: 12px;
+  z-index: 100;
+  padding: 10px 14px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  border-radius: 6px;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: none;
+}

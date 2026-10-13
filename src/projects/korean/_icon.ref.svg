@@ -1,0 +1,4 @@
+<!-- Reference only. The icon Next.js actually serves for this project is the
+     identical file at src/app/korean-shadowing/icon.svg. This copy is imported by nothing
+     and can be deleted. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#07080c"/><g stroke-linecap="round" stroke-width="5"><path d="M14 28v8M24 20v24M34 14v36M44 22v20M54 28v8" stroke="#4cc9f0"/></g><circle cx="46" cy="46" r="8" fill="#ff7a59"/></svg>

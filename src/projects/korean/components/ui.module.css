@@ -1,0 +1,85 @@
+.section {
+  padding-top: var(--section-gap);
+  scroll-margin-top: calc(var(--nav-h) - var(--section-gap) + 24px);
+}
+
+.frame {
+  max-width: calc(var(--frame) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.head {
+  display: grid;
+  gap: 20px;
+  max-width: var(--measure);
+  margin-bottom: clamp(40px, 6vw, 72px);
+}
+
+.h2 {
+  font-size: var(--step-4);
+}
+
+/* Copyable blocks (citation, BibTeX) */
+.copyBlock {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  align-content: start;
+}
+
+.copyBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.copyTitle {
+  font-family: var(--font-text);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: 0;
+}
+
+.copyButton {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--step--2);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.copyButton:hover {
+  background: var(--char-2);
+}
+
+.copyText {
+  margin: 0;
+  padding: 16px 18px;
+  background: var(--char-1);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink-2);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.copyTextSans {
+  font-family: var(--font-text);
+  font-size: var(--step--1);
+  color: var(--ink);
+}
+
+.copyHint {
+  color: var(--ink-3);
+  font-size: var(--step--2);
+}

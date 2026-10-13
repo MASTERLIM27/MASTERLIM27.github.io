@@ -1,0 +1,486 @@
+.intro {
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+
+.disclaimer {
+  max-width: var(--measure);
+  padding-left: 14px;
+  border-left: 2px solid var(--line-strong);
+  color: var(--ink-3);
+  font-size: var(--step--1);
+}
+
+/* The console: status, controls and log on the left; live charts and readouts on the right.
+   On narrow screens the two columns dissolve into one list: status, controls, charts, readouts, log. */
+.console {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1fr);
+  padding: clamp(16px, 2.5vw, 28px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--char-1);
+  transition: border-color 300ms ease;
+}
+
+.console[data-alarm="true"] {
+  border-color: var(--alert-line);
+}
+
+.side,
+.main {
+  display: contents;
+}
+
+.statusCard {
+  order: 1;
+}
+.controls {
+  order: 2;
+}
+.charts {
+  order: 3;
+}
+.readouts {
+  order: 4;
+}
+.log {
+  order: 5;
+}
+
+@media (min-width: 1000px) {
+  .console {
+    grid-template-columns: minmax(17rem, 0.36fr) minmax(0, 1fr);
+    gap: 28px;
+  }
+  .side,
+  .main {
+    display: grid;
+    gap: 20px;
+    align-content: start;
+    min-width: 0;
+  }
+  .main {
+    container: monitor-main / inline-size;
+  }
+}
+
+/* Status card, after the tool-health panel in Figure 5 */
+.statusCard {
+  display: grid;
+  gap: 6px;
+  padding: 16px 18px;
+  border: 1px solid var(--ok-line);
+  border-radius: 12px;
+  background: var(--black);
+}
+
+.statusCard[data-status="critical"] {
+  border-color: var(--alert-line);
+  background: linear-gradient(var(--alert-wash), var(--alert-wash)), var(--black);
+}
+
+.statusTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.lamp {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: var(--ok);
+  box-shadow: 0 0 10px var(--ok);
+}
+
+.lamp[data-status="critical"] {
+  background: var(--alert);
+  box-shadow: 0 0 12px var(--alert);
+}
+
+.toolName {
+  font-weight: 650;
+}
+
+.statusPill {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--ok);
+  color: #03170b;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.statusPill[data-status="critical"] {
+  background: var(--alert);
+  color: var(--on-alert);
+}
+
+.healthLabel {
+  color: var(--ink-3);
+  font-size: var(--step--2);
+}
+
+.healthValue {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 2rem + 1.6vw, 3.25rem);
+  font-weight: 650;
+  font-stretch: 104%;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.meter {
+  height: 8px;
+  margin: 8px 0 4px;
+  border-radius: 4px;
+  background: rgba(60, 207, 126, 0.18);
+  overflow: hidden;
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  background: var(--ok);
+  transition: width 160ms linear;
+}
+
+.meter[data-status="critical"] {
+  background: rgba(255, 90, 82, 0.18);
+}
+
+.meter[data-status="critical"] span {
+  background: var(--alert);
+}
+
+.statusText {
+  color: var(--ink-2);
+  font-size: var(--step--1);
+}
+
+.statusText[data-alarm="true"] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.note {
+  color: var(--ink-3);
+  font-size: 0.75rem;
+}
+
+/* Controls */
+.controls {
+  display: grid;
+  gap: 16px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.primary,
+.secondary {
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: var(--step--1);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.primary {
+  border: 0;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.primary:hover {
+  filter: brightness(1.08);
+}
+
+.secondary {
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--ink);
+}
+
+.secondary:hover {
+  background: var(--char-2);
+}
+
+.slider {
+  display: grid;
+  gap: 8px;
+}
+
+.sliderHead {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.sliderHead output {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+
+.slider input {
+  width: 100%;
+  min-height: 28px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink-2);
+  font-size: var(--step--1);
+  cursor: pointer;
+}
+
+.check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+.runState {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-3);
+  font-size: var(--step--2);
+}
+
+.runState span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-3);
+}
+
+.runState[data-running="true"] span {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* Live values, in the order of the field list in Figure 5 */
+.readouts {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 16px;
+  min-width: 0;
+}
+
+.readouts div {
+  display: grid;
+  gap: 1px;
+  align-content: start;
+  min-width: 0;
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
+}
+
+.readouts dt {
+  color: var(--ink-3);
+  font-size: 0.75rem;
+}
+
+.readouts dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.readouts dd[data-over="true"] {
+  color: var(--alert);
+}
+
+/* Units set in the text face, so a Korean unit such as 초 doesn't fall back inside the mono face */
+.unit {
+  margin-left: 0.3em;
+  font-family: var(--font-text);
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+
+@media (min-width: 560px) {
+  .readouts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 820px) and (max-width: 999px) {
+  .readouts {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
+
+@container monitor-main (min-width: 720px) {
+  .readouts {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
+
+/* Charts */
+.charts {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  min-width: 0;
+}
+
+.chart {
+  margin: 0;
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.chartHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 14px;
+  color: var(--ink-2);
+  font-size: var(--step--2);
+}
+
+/* Threshold key: the red line in the plot, named here so the data never runs through the text */
+.limitKey {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-3);
+  font-size: 0.75rem;
+}
+
+.limitSwatch {
+  width: 14px;
+  border-top: 1px solid var(--alert);
+  opacity: 0.85;
+}
+
+.chartHead strong {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.chartHead strong.over {
+  color: var(--alert);
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 76px;
+  border-radius: 6px;
+  background: var(--black);
+  touch-action: pan-y;
+}
+
+.big .canvas {
+  height: 128px;
+}
+
+.smallCharts {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.xLabel {
+  color: var(--ink-3);
+  font-size: 0.75rem;
+}
+
+.log {
+  display: grid;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.logH {
+  font-family: var(--font-text);
+  font-size: var(--step--1);
+  font-weight: 650;
+  font-stretch: 100%;
+  letter-spacing: 0;
+}
+
+.logEmpty {
+  color: var(--ink-3);
+  font-size: var(--step--1);
+}
+
+.log ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+  font-size: var(--step--1);
+  font-variant-numeric: tabular-nums;
+}
+
+.log li {
+  display: flex;
+  gap: 8px;
+  color: var(--ink-2);
+}
+
+.log li::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 0.45em;
+  margin-top: calc((1lh - 8px) / 2);
+  border-radius: 2px;
+  background: var(--ink-3);
+}
+
+.log li[data-kind="alarm"] {
+  color: var(--ink);
+}
+
+.log li[data-kind="alarm"]::before {
+  background: var(--alert);
+}
+
+.log li[data-kind="replaced"]::before {
+  background: var(--ok);
+}
+
+@media (max-width: 560px) {
+  .smallCharts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .big .canvas {
+    height: 112px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meter span {
+    transition: none;
+  }
+}

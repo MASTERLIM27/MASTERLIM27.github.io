@@ -1,0 +1,11 @@
+/*
+  Reference only — this file is imported by nothing and can be deleted.
+
+  It held this project's original standalone globals.css. In the merged portfolio the
+  shared resets live once in src/app/globals.css, and this project's own tokens moved
+  there verbatim as the `.theme-tool-wear` block, applied to the wrapper element in
+  src/projects/tool-wear/components/Site.tsx.
+
+  (The merge ran in an environment that could not delete files in this folder, so the
+  placeholder is left here rather than removed.)
+*/

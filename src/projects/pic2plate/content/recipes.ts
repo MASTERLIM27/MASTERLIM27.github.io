@@ -1,0 +1,427 @@
+import type { Recipe } from "@/projects/pic2plate/lib/types";
+
+/**
+ * Illustrative recipe pool that stands in for the web in the demo.
+ * Order = how a generic recipe site would rank them by popularity,
+ * which is what a vague query falls back to.
+ */
+export const POOL: Recipe[] = [
+  {
+    id: "beef",
+    title: { en: "Spicy Beef Stir-Fry", ko: "매콤 소고기 볶음" },
+    core: [
+      { id: "beef", w: 3, amount: { en: "250 g beef, thinly sliced", ko: "소고기 250g, 얇게 썬 것" } },
+      { id: "chili", w: 1, amount: { en: "2 red chilies, sliced", ko: "홍고추 2개, 송송 썬 것" } },
+      { id: "garlic", w: 1, amount: { en: "3 garlic cloves, minced", ko: "다진 마늘 3쪽" } },
+      { id: "ginger", w: 1, amount: { en: "1 tsp grated ginger", ko: "간 생강 1작은술" } },
+      { id: "soy", w: 1, amount: { en: "2 tbsp soy sauce", ko: "간장 2큰술" } },
+    ],
+    tags: ["stir-fry", "beef", "dinner"],
+    taste: "spicy",
+    spice: 2,
+    sodium: "adaptable",
+    sugar: "adaptable",
+    gluten: "adaptable",
+    minutes: 25,
+    steps: {
+      en: [
+        "Sear the beef in a very hot pan for 2 minutes, then set it aside.",
+        "Stir-fry the garlic, ginger and chili for 30 seconds.",
+        "Return the beef, add the soy sauce and toss until glossy.",
+      ],
+      ko: [
+        "아주 뜨거운 팬에 소고기를 2분간 볶아 따로 덜어 둡니다.",
+        "마늘, 생강, 고추를 30초간 볶습니다.",
+        "소고기를 다시 넣고 간장을 둘러 윤기 나게 볶습니다.",
+      ],
+    },
+    tip: { en: "Slice the beef against the grain so it stays tender.", ko: "소고기는 결 반대 방향으로 썰어야 부드럽습니다." },
+    subs: {
+      beef: { en: "Use pressed tofu or mushrooms instead of beef.", ko: "소고기 대신 물기를 뺀 두부나 버섯을 쓰세요." },
+    },
+  },
+  {
+    id: "chicken",
+    title: { en: "Low-Sodium Chicken Stir-Fry", ko: "저염 닭고기 볶음" },
+    core: [
+      { id: "chicken", w: 3, amount: { en: "250 g chicken breast, sliced", ko: "닭가슴살 250g, 썬 것" } },
+      { id: "broccoli", w: 1, amount: { en: "1 head broccoli, in florets", ko: "브로콜리 1송이, 작게 나눈 것" } },
+      { id: "garlic", w: 1, amount: { en: "2 garlic cloves, sliced", ko: "마늘 2쪽, 편 썬 것" } },
+      { id: "ginger", w: 1, amount: { en: "1 tsp grated ginger", ko: "간 생강 1작은술" } },
+    ],
+    tags: ["stir-fry", "chicken"],
+    taste: "mild",
+    spice: 0,
+    sodium: "low",
+    sugar: "low",
+    gluten: "none",
+    minutes: 20,
+    steps: {
+      en: [
+        "Brown the chicken in a little oil, about 5 minutes.",
+        "Add the garlic, ginger and broccoli with 3 tbsp water, then cover for 3 minutes.",
+        "Season with pepper and a squeeze of lemon instead of salt.",
+      ],
+      ko: [
+        "닭고기를 약간의 기름에 5분 정도 노릇하게 굽습니다.",
+        "마늘, 생강, 브로콜리와 물 3큰술을 넣고 뚜껑을 덮어 3분간 익힙니다.",
+        "소금 대신 후추와 레몬즙으로 간을 합니다.",
+      ],
+    },
+    tip: {
+      en: "Cut the chicken thin so it cooks through before the broccoli goes soft.",
+      ko: "닭고기를 얇게 썰면 브로콜리가 무르기 전에 속까지 익습니다.",
+    },
+    subs: {
+      chicken: { en: "Swap the chicken for firm tofu.", ko: "닭고기 대신 단단한 두부를 쓰세요." },
+      broccoli: { en: "Any green vegetable works in place of broccoli.", ko: "브로콜리 대신 다른 초록 채소를 써도 됩니다." },
+    },
+  },
+  {
+    id: "shrimp",
+    title: { en: "Chili Garlic Shrimp", ko: "칠리 갈릭 새우" },
+    core: [
+      { id: "shrimp", w: 3, amount: { en: "300 g shrimp, peeled", ko: "손질한 새우 300g" } },
+      { id: "chili", w: 1, amount: { en: "2 red chilies, chopped", ko: "홍고추 2개, 다진 것" } },
+      { id: "garlic", w: 1, amount: { en: "4 garlic cloves, minced", ko: "다진 마늘 4쪽" } },
+      { id: "butter", w: 1, amount: { en: "1 tbsp butter", ko: "버터 1큰술" } },
+    ],
+    tags: ["seafood", "shrimp"],
+    taste: "spicy",
+    spice: 2,
+    sodium: "low",
+    sugar: "low",
+    gluten: "none",
+    minutes: 15,
+    steps: {
+      en: [
+        "Melt the butter and sizzle the garlic and chili for 30 seconds.",
+        "Add the shrimp and cook for 2 minutes per side, until pink.",
+        "Finish with a squeeze of lime.",
+      ],
+      ko: [
+        "버터를 녹이고 마늘과 고추를 30초간 볶습니다.",
+        "새우를 넣고 분홍빛이 될 때까지 앞뒤로 2분씩 익힙니다.",
+        "라임즙을 살짝 뿌려 마무리합니다.",
+      ],
+    },
+    tip: { en: "Pat the shrimp dry so they sear instead of steaming.", ko: "새우의 물기를 닦아야 찌지 않고 제대로 구워집니다." },
+    subs: {
+      shrimp: { en: "Use cubed firm tofu instead of shrimp.", ko: "새우 대신 깍둑 썬 단단한 두부를 쓰세요." },
+      butter: { en: "Use 1 tbsp neutral oil instead of butter.", ko: "버터 대신 식용유 1큰술을 쓰세요." },
+    },
+  },
+  {
+    id: "noodles",
+    title: { en: "Garlic Chili Oil Noodles", ko: "마늘 고추기름 비빔면" },
+    core: [
+      { id: "noodles", w: 3, amount: { en: "200 g noodles", ko: "면 200g" } },
+      { id: "garlic", w: 1, amount: { en: "4 garlic cloves, minced", ko: "다진 마늘 4쪽" } },
+      { id: "chili", w: 1, amount: { en: "2 red chilies, finely chopped", ko: "홍고추 2개, 잘게 다진 것" } },
+      { id: "soy", w: 1, amount: { en: "2 tbsp soy sauce", ko: "간장 2큰술" } },
+      { id: "scallion", w: 1, amount: { en: "2 spring onions, sliced", ko: "쪽파 2대, 송송 썬 것" } },
+    ],
+    tags: ["noodles"],
+    taste: "spicy",
+    spice: 2,
+    sodium: "adaptable",
+    sugar: "adaptable",
+    gluten: "contains",
+    minutes: 15,
+    steps: {
+      en: [
+        "Boil the noodles and drain them.",
+        "Pour 3 tbsp sizzling-hot oil over the garlic, chili and spring onion.",
+        "Toss the noodles with the chili oil and soy sauce.",
+      ],
+      ko: [
+        "면을 삶아 물기를 뺍니다.",
+        "마늘, 고추, 쪽파 위에 뜨겁게 달군 기름 3큰술을 붓습니다.",
+        "면에 고추기름과 간장을 넣고 버무립니다.",
+      ],
+    },
+    tip: {
+      en: "Heat the oil until it shimmers so it sizzles when it hits the garlic.",
+      ko: "기름은 아지랑이가 보일 만큼 달궈야 마늘에 부었을 때 지글거립니다.",
+    },
+    subs: {
+      noodles: {
+        en: "No noodles? Spoon the chili oil over rice or seared tofu.",
+        ko: "면이 없다면 고추기름을 밥이나 구운 두부에 곁들이세요.",
+      },
+    },
+  },
+  {
+    id: "friedrice",
+    title: { en: "Garlic Fried Rice", ko: "마늘 볶음밥" },
+    core: [
+      { id: "rice", w: 3, amount: { en: "2 bowls cooked rice", ko: "밥 2공기" } },
+      { id: "garlic", w: 1, amount: { en: "5 garlic cloves, minced", ko: "다진 마늘 5쪽" } },
+      { id: "egg", w: 1, amount: { en: "2 eggs", ko: "달걀 2개" } },
+      { id: "soy", w: 1, amount: { en: "1 tbsp soy sauce", ko: "간장 1큰술" } },
+      { id: "scallion", w: 1, amount: { en: "2 spring onions, sliced", ko: "쪽파 2대, 송송 썬 것" } },
+    ],
+    tags: ["rice"],
+    taste: "mild",
+    spice: 0,
+    sodium: "adaptable",
+    sugar: "high",
+    gluten: "adaptable",
+    minutes: 15,
+    steps: {
+      en: [
+        "Fry the garlic slowly until golden.",
+        "Add the rice and stir-fry until hot, then push it aside and scramble the eggs.",
+        "Season with soy sauce and top with spring onion.",
+      ],
+      ko: [
+        "마늘을 약불에서 노릇하게 볶습니다.",
+        "밥을 넣어 뜨겁게 볶은 뒤 한쪽으로 밀고 달걀을 스크램블합니다.",
+        "간장으로 간하고 쪽파를 올립니다.",
+      ],
+    },
+    tip: { en: "Day-old rice fries best because it is drier.", ko: "하루 지난 밥이 수분이 적어 볶음밥에 잘 맞습니다." },
+    subs: {
+      rice: { en: "Cauliflower rice works if you have no cooked rice.", ko: "밥이 없다면 콜리플라워 라이스를 써도 됩니다." },
+      egg: { en: "Crumble tofu into the pan in place of the eggs.", ko: "달걀 대신 두부를 으깨 넣으세요." },
+    },
+  },
+  {
+    id: "kimchi",
+    title: { en: "Kimchi Tofu Stew", ko: "김치 두부 찌개" },
+    core: [
+      { id: "tofu", w: 3, amount: { en: "300 g tofu, cubed", ko: "두부 300g, 깍둑 썬 것" } },
+      { id: "kimchi", w: 2, amount: { en: "1 cup aged kimchi", ko: "신김치 1컵" } },
+      { id: "chili", w: 1, amount: { en: "1 red chili, sliced", ko: "홍고추 1개, 어슷 썬 것" } },
+      { id: "garlic", w: 1, amount: { en: "2 garlic cloves, minced", ko: "다진 마늘 2쪽" } },
+      { id: "scallion", w: 1, amount: { en: "2 spring onions, cut", ko: "쪽파 2대, 썬 것" } },
+    ],
+    tags: ["stew", "korean"],
+    taste: "spicy",
+    spice: 2,
+    sodium: "high",
+    sugar: "low",
+    gluten: "none",
+    minutes: 30,
+    steps: {
+      en: [
+        "Sauté the kimchi and garlic for 3 minutes.",
+        "Add 2 cups of water and simmer for 15 minutes.",
+        "Add the tofu and chili, simmer 5 more minutes, then top with spring onion.",
+      ],
+      ko: [
+        "김치와 마늘을 3분간 볶습니다.",
+        "물 2컵을 붓고 15분간 끓입니다.",
+        "두부와 고추를 넣어 5분 더 끓인 뒤 쪽파를 올립니다.",
+      ],
+    },
+    tip: { en: "Older, sour kimchi gives the stew more depth.", ko: "잘 익은 신김치를 쓰면 찌개 맛이 깊어집니다." },
+    subs: {
+      kimchi: {
+        en: "Without kimchi, use sliced cabbage with a little chili flakes and vinegar.",
+        ko: "김치가 없다면 썬 배추에 고춧가루와 식초를 조금 더해 대신하세요.",
+      },
+    },
+  },
+  {
+    id: "mapo",
+    title: { en: "Vegetarian Mapo Tofu", ko: "채식 마파두부" },
+    core: [
+      { id: "tofu", w: 3, amount: { en: "400 g soft tofu, cubed", ko: "연두부 400g, 깍둑 썬 것" } },
+      { id: "beanpaste", w: 1, amount: { en: "1 tbsp chili bean paste", ko: "두반장 1큰술" } },
+      { id: "garlic", w: 1, amount: { en: "2 garlic cloves, minced", ko: "다진 마늘 2쪽" } },
+      { id: "ginger", w: 1, amount: { en: "1 tsp minced ginger", ko: "다진 생강 1작은술" } },
+      { id: "scallion", w: 1, amount: { en: "2 spring onions, sliced", ko: "쪽파 2대, 송송 썬 것" } },
+      { id: "chili", w: 1, amount: { en: "1 red chili, chopped", ko: "홍고추 1개, 다진 것" } },
+    ],
+    tags: ["sichuan", "braised"],
+    taste: "spicy",
+    spice: 2,
+    sodium: "high",
+    sugar: "low",
+    gluten: "adaptable",
+    minutes: 25,
+    steps: {
+      en: [
+        "Fry the bean paste, garlic, ginger and chili until fragrant.",
+        "Add ½ cup of water and the tofu, then simmer gently for 5 minutes.",
+        "Thicken with a little starch slurry and top with spring onion.",
+      ],
+      ko: [
+        "두반장, 마늘, 생강, 고추를 향이 날 때까지 볶습니다.",
+        "물 ½컵과 두부를 넣고 5분간 약하게 끓입니다.",
+        "전분물로 농도를 맞추고 쪽파를 올립니다.",
+      ],
+    },
+    tip: { en: "Simmer gently so the soft tofu holds its shape.", ko: "연두부가 부서지지 않도록 약한 불에서 끓이세요." },
+    subs: {
+      beanpaste: {
+        en: "No chili bean paste? Mix soy sauce with chopped chili.",
+        ko: "두반장이 없다면 간장에 다진 고추를 섞어 쓰세요.",
+      },
+    },
+  },
+  {
+    id: "sgtofu",
+    title: { en: "Spicy Garlic Tofu", ko: "매콤 마늘 두부" },
+    core: [
+      { id: "tofu", w: 3, amount: { en: "400 g firm tofu, cubed", ko: "단단한 두부 400g, 깍둑 썬 것" } },
+      { id: "garlic", w: 1, amount: { en: "4 garlic cloves, minced", ko: "다진 마늘 4쪽" } },
+      { id: "chili", w: 1, amount: { en: "2 red chilies, sliced", ko: "홍고추 2개, 송송 썬 것" } },
+      { id: "soy", w: 1, amount: { en: "2 tbsp soy sauce", ko: "간장 2큰술" } },
+      { id: "scallion", w: 1, amount: { en: "2 spring onions, sliced", ko: "쪽파 2대, 송송 썬 것" } },
+    ],
+    tags: ["pan-fried", "dinner"],
+    taste: "spicy",
+    spice: 2,
+    sodium: "adaptable",
+    sugar: "adaptable",
+    gluten: "adaptable",
+    minutes: 20,
+    steps: {
+      en: [
+        "Pat the tofu dry and pan-sear it until golden on all sides.",
+        "Add the garlic and chili and stir for 1 minute.",
+        "Pour in the soy sauce with 2 tbsp water, toss to glaze and top with spring onion.",
+      ],
+      ko: [
+        "두부의 물기를 닦고 모든 면이 노릇해질 때까지 굽습니다.",
+        "마늘과 고추를 넣고 1분간 볶습니다.",
+        "간장과 물 2큰술을 넣어 윤기 나게 졸이고 쪽파를 올립니다.",
+      ],
+    },
+    tip: {
+      en: "Press the tofu for 10 minutes so it browns instead of steaming.",
+      ko: "두부를 10분간 눌러 물기를 빼면 찌지 않고 노릇하게 구워집니다.",
+    },
+  },
+  {
+    id: "gstofu",
+    title: { en: "Ginger Soy Tofu Stir-Fry", ko: "생강 간장 두부 볶음" },
+    core: [
+      { id: "tofu", w: 3, amount: { en: "400 g firm tofu, cubed", ko: "단단한 두부 400g, 깍둑 썬 것" } },
+      { id: "ginger", w: 1, amount: { en: "1 tbsp ginger, cut into matchsticks", ko: "생강 1큰술, 채 썬 것" } },
+      { id: "soy", w: 1, amount: { en: "2 tbsp soy sauce", ko: "간장 2큰술" } },
+      { id: "scallion", w: 1, amount: { en: "3 spring onions, cut", ko: "쪽파 3대, 썬 것" } },
+      { id: "garlic", w: 1, amount: { en: "2 garlic cloves, sliced", ko: "마늘 2쪽, 편 썬 것" } },
+    ],
+    tags: ["stir-fry"],
+    taste: "mild",
+    spice: 1,
+    sodium: "adaptable",
+    sugar: "low",
+    gluten: "adaptable",
+    minutes: 15,
+    steps: {
+      en: [
+        "Brown the tofu in a hot pan.",
+        "Add the ginger, garlic and spring onion and stir-fry for 1 minute.",
+        "Add the soy sauce and toss until the tofu is coated.",
+      ],
+      ko: [
+        "뜨거운 팬에 두부를 노릇하게 굽습니다.",
+        "생강, 마늘, 쪽파를 넣고 1분간 볶습니다.",
+        "간장을 넣고 두부에 고루 묻도록 볶습니다.",
+      ],
+    },
+    tip: { en: "Cut the ginger into fine matchsticks so it crisps a little.", ko: "생강을 가늘게 채 썰면 살짝 바삭해집니다." },
+  },
+  {
+    id: "soup",
+    title: { en: "Scallion Ginger Tofu Soup", ko: "쪽파 생강 두부국" },
+    core: [
+      { id: "tofu", w: 3, amount: { en: "300 g soft tofu, cubed", ko: "연두부 300g, 깍둑 썬 것" } },
+      { id: "ginger", w: 1, amount: { en: "4 thin slices of ginger", ko: "생강 4쪽, 얇게 저민 것" } },
+      { id: "scallion", w: 1, amount: { en: "3 spring onions, sliced", ko: "쪽파 3대, 송송 썬 것" } },
+    ],
+    tags: ["soup"],
+    taste: "mild",
+    spice: 0,
+    sodium: "low",
+    sugar: "low",
+    gluten: "none",
+    minutes: 20,
+    steps: {
+      en: [
+        "Simmer the ginger in 3 cups of water for 10 minutes.",
+        "Add the tofu and cook for 3 minutes.",
+        "Turn off the heat, add the spring onion and season lightly.",
+      ],
+      ko: [
+        "물 3컵에 생강을 넣고 10분간 끓입니다.",
+        "두부를 넣어 3분간 익힙니다.",
+        "불을 끄고 쪽파를 넣은 뒤 싱겁게 간합니다.",
+      ],
+    },
+    tip: {
+      en: "Add the spring onion off the heat to keep it bright green.",
+      ko: "쪽파는 불을 끈 뒤에 넣어야 색이 선명합니다.",
+    },
+  },
+  {
+    id: "cold",
+    title: { en: "Chilled Tofu with Soy and Scallion", ko: "간장 쪽파 냉두부" },
+    core: [
+      { id: "tofu", w: 3, amount: { en: "300 g silken tofu, chilled", ko: "차가운 연두부 300g" } },
+      { id: "soy", w: 1, amount: { en: "1 tbsp soy sauce", ko: "간장 1큰술" } },
+      { id: "scallion", w: 1, amount: { en: "1 spring onion, finely sliced", ko: "쪽파 1대, 곱게 썬 것" } },
+      { id: "ginger", w: 1, amount: { en: "1 tsp grated ginger", ko: "간 생강 1작은술" } },
+    ],
+    tags: ["no-cook", "japanese"],
+    taste: "mild",
+    spice: 1,
+    sodium: "adaptable",
+    sugar: "low",
+    gluten: "adaptable",
+    minutes: 5,
+    steps: {
+      en: [
+        "Drain the tofu and set it on a plate.",
+        "Top with the grated ginger and spring onion.",
+        "Spoon over the soy sauce just before serving.",
+      ],
+      ko: [
+        "두부의 물기를 빼고 접시에 담습니다.",
+        "간 생강과 쪽파를 올립니다.",
+        "먹기 직전에 간장을 끼얹습니다.",
+      ],
+    },
+    tip: { en: "Use the coldest, freshest silken tofu you can find.", ko: "되도록 차갑고 신선한 연두부를 쓰세요." },
+  },
+  {
+    id: "bokchoy",
+    title: { en: "Ginger Garlic Bok Choy", ko: "생강 마늘 청경채 볶음" },
+    core: [
+      { id: "bokchoy", w: 3, amount: { en: "4 heads bok choy, halved", ko: "청경채 4포기, 반으로 가른 것" } },
+      { id: "garlic", w: 1, amount: { en: "3 garlic cloves, sliced", ko: "마늘 3쪽, 편 썬 것" } },
+      { id: "ginger", w: 1, amount: { en: "1 tsp ginger, cut into matchsticks", ko: "생강 1작은술, 채 썬 것" } },
+      { id: "soy", w: 1, amount: { en: "1 tbsp soy sauce", ko: "간장 1큰술" } },
+    ],
+    tags: ["vegetables"],
+    taste: "mild",
+    spice: 1,
+    sodium: "adaptable",
+    sugar: "low",
+    gluten: "adaptable",
+    minutes: 10,
+    steps: {
+      en: [
+        "Heat a little oil and fry the garlic and ginger for 30 seconds.",
+        "Add the bok choy and 2 tbsp water, then cover for 2 minutes.",
+        "Season with soy sauce and serve.",
+      ],
+      ko: [
+        "기름을 두르고 마늘과 생강을 30초간 볶습니다.",
+        "청경채와 물 2큰술을 넣고 뚜껑을 덮어 2분간 익힙니다.",
+        "간장으로 간해 냅니다.",
+      ],
+    },
+    tip: {
+      en: "Halve the bok choy so the thick stems cook as fast as the leaves.",
+      ko: "청경채를 반으로 가르면 두꺼운 줄기도 잎과 함께 익습니다.",
+    },
+    subs: {
+      bokchoy: { en: "Any leafy green works instead of bok choy.", ko: "청경채 대신 다른 잎채소를 써도 됩니다." },
+    },
+  },
+];
