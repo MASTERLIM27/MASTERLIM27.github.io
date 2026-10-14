@@ -539,3 +539,119 @@ html:lang(ko) .subtitle {
   transform: translateY(-100%);
   font-size: 0.6875rem;
 }
+
+/* ---------------------------------------------------------------- print / PDF
+   On paper the film cannot play. It becomes a cover (the title over the first frame) and
+   a storyboard: each beat beside its still. The stills exist only while
+   scripts/make-pdf.mjs prints the page (src/lib/PrintStill.tsx). */
+@media print {
+  .film {
+    height: auto !important;
+  }
+
+  .sticky,
+  .sticky[data-layout] {
+    position: relative;
+    height: auto;
+    overflow: visible;
+    background-image: none !important;
+  }
+
+  .canvas,
+  .imageRect,
+  .scrim,
+  .dim,
+  .loading,
+  .scrollCue {
+    display: none !important;
+  }
+
+  /* The cover: the whole first frame across the top of the page, the title under it. */
+  .titleCard,
+  .sticky[data-layout] .titleCard {
+    position: relative;
+    inset: auto;
+    min-height: 100vh;
+    padding: 0 var(--gutter) 16vh;
+    place-content: end center;
+    opacity: 1 !important;
+    transform: none !important;
+    isolation: isolate;
+    break-after: page;
+  }
+
+  .printCover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+  }
+
+  .beats,
+  .sticky[data-layout] .beats {
+    position: static;
+    width: auto;
+    max-width: calc(var(--frame) + 2 * var(--gutter));
+    margin-inline: auto;
+    padding: 72px var(--gutter) 28px;
+    display: grid;
+    gap: 44px;
+    transform: none;
+  }
+
+  .beat,
+  .sticky[data-layout] .beat {
+    grid-area: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    column-gap: 36px;
+    row-gap: 12px;
+    align-content: center;
+    opacity: 1 !important;
+    transform: none !important;
+    break-inside: avoid;
+  }
+
+  .beat > * {
+    grid-column: 2;
+  }
+
+  .beat > .printStill {
+    grid-column: 1;
+    grid-row: 1 / span 8;
+    align-self: center;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+
+  .beat:not(:has(.printStill)) > * {
+    grid-column: 1 / -1;
+    max-width: 64ch;
+  }
+
+  .caption,
+  .sticky[data-layout] .caption {
+    position: static;
+    max-width: none;
+    padding: 0 var(--gutter) 48px;
+    text-align: left;
+    transform: none;
+  }
+
+  /* The network sizes and the alarm that sat on the picture come back inside their beats. */
+  .inlineNet {
+    display: block !important;
+  }
+
+  .inlineHud {
+    display: inline-flex !important;
+  }
+}

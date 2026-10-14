@@ -13,6 +13,7 @@ import {
   reducedFrameAt,
 } from "@/projects/pic2plate/lib/film";
 import { createFrameLoader } from "@/lib/filmFrames";
+import PrintStill from "@/lib/PrintStill";
 import { JSON_NAME, KITCHEN } from "@/projects/pic2plate/lib/engine";
 import { IngredientJson } from "./ui";
 import styles from "./ScrollFilm.module.css";
@@ -200,6 +201,7 @@ export default function ScrollFilm() {
         <div ref={dimRef} className={styles.dim} aria-hidden="true" />
 
         <div ref={setBeat(0)} className={styles.titleCard}>
+          <PrintStill frame={1} className={styles.printCover} />
           <h1 className={styles.title}>{f.title}</h1>
           <p className={styles.subtitle}>{f.subtitle}</p>
           <p className={styles.paperLine}>
@@ -223,11 +225,13 @@ export default function ScrollFilm() {
             <p className={styles.beatP}>{f.see.p}</p>
           </div>
           <div ref={setBeat(3)} className={styles.beat}>
+            <PrintStill frame={REDUCED_FRAME.detect} className={styles.printStill} />
             <h2 className={styles.beatH}>{f.detect.h}</h2>
             <p className={styles.beatP}>{f.detect.p}</p>
             <IngredientJson items={KITCHEN.map((k) => JSON_NAME[k])} perLine={3} className={styles.json} />
           </div>
           <div ref={setBeat(4)} className={styles.beat}>
+            <PrintStill frame={REDUCED_FRAME.search} className={styles.printStill} />
             <p className={styles.stage}>{f.search.stage}</p>
             <h2 className={styles.beatH}>{f.search.h}</h2>
             <p className={styles.beatP}>{f.search.p}</p>
@@ -246,10 +250,12 @@ export default function ScrollFilm() {
             <p className={styles.traceNote}>{f.search.traceNote}</p>
           </div>
           <div ref={setBeat(5)} className={styles.beat}>
+            <PrintStill frame={REDUCED_FRAME.adapt} className={styles.printStill} />
             <h2 className={styles.beatH}>{f.adapt.h}</h2>
             <p className={styles.beatP}>{f.adapt.p}</p>
           </div>
           <div ref={setBeat(6)} className={styles.beat}>
+            <PrintStill frame={REDUCED_FRAME.plate} className={styles.printStill} />
             <h2 className={styles.beatH}>{f.plate.h}</h2>
             <p className={styles.beatP}>{f.plate.p}</p>
           </div>

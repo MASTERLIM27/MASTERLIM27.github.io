@@ -1,4 +1,5 @@
-# Builds the static export and publishes it to GitHub Pages on every push to main.
+# Builds the static export, prints the site into the two downloadable PDFs, and publishes
+# it to GitHub Pages on every push to main.
 # Needs: Settings → Pages → Source → "GitHub Actions".
 name: Deploy to GitHub Pages
 
@@ -27,6 +28,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - run: npx playwright install --with-deps --only-shell chromium
+      - run: npm run pdf
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

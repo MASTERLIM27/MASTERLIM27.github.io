@@ -239,6 +239,9 @@ export function Cite() {
         <a className={`${s.linkButton} ${s.primary}`} href={LINKS.doi} target="_blank" rel="noreferrer">
           {c.links.doi}
         </a>
+        <a className={s.linkButton} href={LINKS.pdf} target="_blank" rel="noreferrer">
+          {c.links.pdf}
+        </a>
         <span className={s.doi}>{c.links.doiShort}</span>
       </div>
       <div className={s.citeGrid}>

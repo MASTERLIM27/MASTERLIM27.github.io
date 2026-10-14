@@ -6,6 +6,8 @@
 
 export const LINKS = {
   doi: "https://doi.org/10.7236/IJIBC.2025.17.4.311",
+  // The journal's open-access PDF, on KoreaScience (where the DOI resolves).
+  pdf: "https://koreascience.or.kr/article/JAKO202535143214173.pdf",
 };
 
 /** Section 4: the four functional tests. */

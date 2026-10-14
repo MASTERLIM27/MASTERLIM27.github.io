@@ -109,7 +109,7 @@ export function CopyBlock({
     <div className={s.copyBlock}>
       <div className={s.copyBar}>
         <h3 className={s.copyTitle}>{title}</h3>
-        <button type="button" className={s.copyButton} onClick={onCopy} aria-live="polite">
+        <button type="button" className={s.copyButton} onClick={onCopy} aria-live="polite" data-print="hide">
           {state === "copied" ? copied : copy}
         </button>
       </div>

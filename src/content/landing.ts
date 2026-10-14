@@ -21,13 +21,25 @@ import * as korean from "@/projects/korean/content/paper";
 import * as pic2plate from "@/projects/pic2plate/content/paper";
 import * as toolWear from "@/projects/tool-wear/content/paper";
 
-/** The only two ways to reach the author that this site publishes. */
+import pdfConfig from "./pdf.json";
+
+/** The only ways to reach the author that this site publishes. */
 export const CONTACT = {
   email: "andreaslim2002@gmail.com",
-  github: { href: "https://github.com/MASTERLIM27", label: "github.com/MASTERLIM27" },
+  github: { href: "https://github.com/MASTERLIM27", label: "MASTERLIM27" },
+  linkedin: { href: "https://www.linkedin.com/in/andreaslimm/", label: "andreaslimm" },
 };
 
 const ME = "Andreas Lim";
+
+/**
+ * The whole site as one PDF per language. scripts/make-pdf.mjs writes them into out/pdf
+ * after a build (`npm run pdf`, and the deploy workflow on every push); both read the file
+ * names from pdf.json.
+ */
+export const PDF = {
+  files: pdfConfig.files.map((f) => ({ lang: f.lang, name: f.name, href: `${pdfConfig.dir}/${f.name}` })),
+};
 
 export type ProjectId = "korean" | "pic2plate" | "tool-wear";
 export type TileKind = "project" | "demo" | "film" | "result";
@@ -283,7 +295,10 @@ export const PAPERS: Paper[] = [
     authors: authors(toolWear.AUTHORS),
     first: toolWear.AUTHORS[0].name === ME,
     venue: both(toolWearEn.film.venue, toolWearKo.film.venue),
-    links: [{ label: both("DOI", "DOI"), href: toolWear.LINKS.doi }],
+    links: [
+      { label: both("DOI", "DOI"), href: toolWear.LINKS.doi },
+      { label: both("PDF", "PDF"), href: toolWear.LINKS.pdf },
+    ],
     tags: ["OPC UA", "AAS", "PyTorch", "Fully connected network", "Time-series signals"],
   },
   {
@@ -294,7 +309,10 @@ export const PAPERS: Paper[] = [
     authors: authors(korean.AUTHORS),
     first: korean.AUTHORS[0].name === ME,
     venue: both(koreanEn.film.venue, koreanKo.film.venue),
-    links: [{ label: both("DOI", "DOI"), href: korean.LINKS.doi }],
+    links: [
+      { label: both("DOI", "DOI"), href: korean.LINKS.doi },
+      { label: both("PDF", "PDF"), href: korean.LINKS.pdf },
+    ],
     tags: ["ArcFace", "YouTube Player API", "Whisper API", "Seed-VC", "Wav2Vec 2.0", "DTW"],
   },
   {
@@ -331,7 +349,7 @@ const enDict = {
     eyebrow: "Portfolio · Applied AI",
     /** One line each; the hero sets the name as large as the screen allows. */
     name: ["Andreas", "Lim"],
-    lead: "I build AI systems that see, listen and watch over machines, and I publish how they work.",
+    lead: "I build AI systems for images, speech and sensor data, and I publish how they work.",
     cue: "Enter the gallery",
   },
 
@@ -349,6 +367,15 @@ const enDict = {
     first: "First author",
     co: "Co-author",
     page: "Project page",
+  },
+
+  contactSection: {
+    h: "Contact",
+    p: "For questions about the papers, or anything else, write by email or find me on GitHub and LinkedIn.",
+  },
+
+  pdf: {
+    button: "Download portfolio PDF",
   },
 
   footer: {
@@ -375,7 +402,7 @@ const koDict: LandingDict = {
   hero: {
     eyebrow: "포트폴리오 · 응용 AI",
     name: ["림 안드레아스"],
-    lead: "보고, 듣고, 기계를 지켜보는 AI 시스템을 만들고, 그 작동 원리를 논문으로 발표합니다.",
+    lead: "이미지, 음성, 센서 데이터를 다루는 AI 시스템을 만들고, 그 작동 원리를 논문으로 발표합니다.",
     cue: "갤러리 보기",
   },
 
@@ -393,6 +420,15 @@ const koDict: LandingDict = {
     first: "제1저자",
     co: "공동 저자",
     page: "프로젝트 페이지",
+  },
+
+  contactSection: {
+    h: "연락처",
+    p: "논문에 관한 질문이나 그 밖의 연락은 이메일로 주시거나 GitHub, LinkedIn에서 찾아 주세요.",
+  },
+
+  pdf: {
+    button: "포트폴리오 PDF 다운로드",
   },
 
   footer: {

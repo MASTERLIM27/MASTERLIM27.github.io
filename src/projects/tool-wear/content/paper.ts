@@ -5,6 +5,8 @@
 
 export const LINKS = {
   doi: "https://doi.org/10.7236/IJIBC.2026.18.1.361",
+  // The journal's open-access PDF, on KoreaScience (where the DOI resolves).
+  pdf: "https://koreascience.or.kr/article/JAKO202607139734130.pdf",
 } as const;
 
 /** Correlation of each signal with program cycle time, read from Figure 2(a).

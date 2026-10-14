@@ -5,7 +5,7 @@ pages, merged from `korean-site.zip`, `pic2plate-site.zip` and `toolwear-site.zi
 
 | Route               | Page                                                      |
 | ------------------- | --------------------------------------------------------- |
-| `/`                 | Gallery: hero, an 18-tile wall of the work, the papers, contact |
+| `/`                 | Gallery: hero, an 18-tile wall of the work, the papers, contact, PDF download |
 | `/korean-shadowing/`| Korean Shadowing App — IJIBC 2025, 17(4), 311–320          |
 | `/pic2plate/`       | Pic2Plate — Sensors 2025, 25(2), 449                       |
 | `/tool-wear/`       | AI-based Tool Wear Prediction for MCT Machines — IJIBC 2026, 18(1), 361–369 |
@@ -24,6 +24,10 @@ npm start       # serves out/ on http://localhost:3000
 
 `npm run build` writes a complete static site to `out/` — no server required.
 
+`npm run pdf` then prints the site into the two PDFs behind the download button (see
+"The portfolio PDF" below). It needs Playwright's Chromium once:
+`npx playwright install --only-shell chromium`. The deploy workflow does both on every push.
+
 ## Structure
 
 ```
@@ -37,12 +41,14 @@ src/
     tool-wear/              /tool-wear/
   components/landing/       the gallery page and its nav
   content/
-    landing.ts              gallery tiles, paper list and landing copy, EN + KO
+    landing.ts              gallery tiles, paper list, contact and landing copy, EN + KO
+    pdf.json                names and titles of the two portfolio PDFs
     shared.ts               the "back to portfolio" label
   lib/
     lang.tsx                the one language choice, shared by every page
     filmFrames.ts           frame loading shared by the three scroll films
     ScrollRegion.tsx        a sideways-scrolling box that keyboards can reach
+    pdf.ts, PrintStill.tsx  what only the printed page shows (the film stills)
     types.ts
   projects/
     korean/ pic2plate/ tool-wear/
@@ -53,6 +59,7 @@ public/
 scripts/
   make-frames-md.sh         rebuilds each film's mid-size frame set
   make-landing-images.sh    rebuilds the landing page's pictures
+  make-pdf.mjs              prints the site into out/pdf/*.pdf
 ```
 
 ## The landing page
@@ -68,8 +75,12 @@ The landing page is a gallery, in the black and gold of its key art.
   nothing is removed, so the wall keeps its shape.
 - **Papers.** Title, authors, venue, the methods each paper reports, and links to the
   project page and the paper.
-- **Contact.** An email address and a GitHub profile, in the hero and the footer. They live
-  in `CONTACT` in `src/content/landing.ts`; nothing else personal is published.
+- **Contact.** Email, GitHub and LinkedIn, with their icons: as pills in the hero and as
+  cards in the contact section. They live in `CONTACT` in `src/content/landing.ts`; nothing
+  else personal is published. The icons are in `src/components/landing/icons.tsx`.
+- **PDF download.** One button in the hero downloads the whole site as two PDFs, English
+  and Korean. Chrome asks once before letting a page start a second download; if the
+  visitor blocks it, only the English file arrives.
 
 Everything on the wall is data in `src/content/landing.ts`. Titles, venues and captions are
 read out of each project's own dictionary and every number out of its `paper.ts`, so the
@@ -123,6 +134,11 @@ shared choice.
   Filling a wide window had pushed the phone off the top and stretched the frames past
   their own pixels, which made the picture soft. Where the picture stops short of the
   window its edges dissolve into the page.
+- **Paper PDFs.** The Korean shadowing and tool-wear pages link to the paper's PDF, as the
+  Pic2Plate page does. Both are the journal's open-access PDFs on KoreaScience, where the
+  DOIs resolve.
+- **Pic2Plate's nav** has the same glowing lamp as the other two bars, in its own amber.
+- **Print layout.** Each film becomes a cover and a storyboard on paper (below).
 - **Accessibility.** Tables that scroll sideways on a phone are keyboard stops with a name
   (`src/lib/ScrollRegion.tsx`); the pseudo-code blocks can be focused; the tool-wear slider
   is taller.
@@ -165,6 +181,32 @@ At that size the mid-size frames are used. A larger window is sent the full-size
 so there the saving is in what opens, not in the whole film.
 
 With reduced motion only the stills are fetched (7 frames on the Korean page).
+
+## The portfolio PDF
+
+`npm run pdf` (after `npm run build`) writes `out/pdf/Andreas-Lim-Portfolio-EN.pdf` and
+`out/pdf/Andreas-Lim-Portfolio-KO.pdf`, about 31 A4 pages each. `scripts/make-pdf.mjs`
+serves `out/` locally, prints the landing page and then every page the landing page links
+to, in that order, with headless Chromium, and joins each language's pages into one file
+with a bookmark per page, page numbers and clickable links to the live site.
+
+**Adding a page needs nothing here.** The script finds the pages through the landing
+page's links, so a new project page that the gallery links to is in the next PDF. How a
+page looks on paper is up to its own stylesheet:
+
+- `@media print` rules: the shared ones in `globals.css` (A4, no margins, the dark look
+  kept edge to edge, headings kept with what follows), plus each component's own (the
+  landing page, the films).
+- `data-print="hide"` keeps an element off paper (nav bars, copy buttons, filters, the PDF
+  button itself). A closed `<details>` is left out unless it has `data-print="open"`.
+- `window.__PDF__` is set while the script prints (`src/lib/pdf.ts`). The films use it to
+  add their stills (`src/lib/PrintStill.tsx`): on paper each film is a cover, the title
+  under its first frame, then a storyboard of each beat beside its still.
+
+The pictures go in as JPEGs, at most 1600 px wide: Chrome re-encodes WebP without loss,
+which made each PDF about 25 MB. Now English is about 4.7 MB; Korean is about 7.3 MB because
+its pages embed far more font glyphs. `SITE_URL` (default `https://masterlim27.github.io`)
+sets where the PDF's links point.
 
 ### Disclaimers
 
@@ -212,7 +254,9 @@ phone, in English and Korean):
 - the films: what is fetched on arrival, after a jump past the film, while scrolling
   through it and with reduced motion;
 - the landing page: the wall at each size, the highlight buttons, keyboard focus, and the
-  reveal in both languages and after switching language.
+  reveal in both languages and after switching language;
+- the PDF button: one click downloads both files; every page of both PDFs was rendered
+  and checked for layout, blank pages, links and bookmarks.
 
 Not checked: Safari and Firefox, a real phone, and the numbers against the papers
 themselves.

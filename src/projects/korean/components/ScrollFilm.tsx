@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useLang } from "@/projects/korean/lib/i18n";
 import {
   BEATS,
+  type BeatId,
   FRAME_ASPECT,
   FRAME_COUNT,
   FRAME_H,
@@ -21,9 +22,12 @@ import {
   zoomAt,
 } from "@/projects/korean/lib/film";
 import { FRAME_MAX_WIDTH, createFrameLoader } from "@/lib/filmFrames";
+import PrintStill from "@/lib/PrintStill";
 import styles from "./ScrollFilm.module.css";
 
 const NAV_H = 64;
+/** Beats that get their still in the printed storyboard; the others look like their neighbour. */
+const PRINT_STILLS = new Set<BeatId>(["select", "practice", "align", "score"]);
 /** The title's push-in is the largest the picture is ever drawn. */
 const ZOOM_MAX = 1.045;
 /** The picture is never drawn more than this much wider than the largest frame's own pixels. */
@@ -276,6 +280,7 @@ export default function ScrollFilm() {
         <div ref={dimRef} className={styles.dim} aria-hidden="true" />
 
         <div ref={setBeat(0)} className={styles.titleCard}>
+          <PrintStill frame={1} className={styles.printCover} />
           <h1 className={styles.title}>{f.title}</h1>
           <p className={styles.subtitle}>{f.subtitle}</p>
           <p className={styles.paperLine}>
@@ -293,6 +298,7 @@ export default function ScrollFilm() {
             const c = f.beats[b.id as Exclude<typeof b.id, "title">];
             return (
               <div key={b.id} ref={setBeat(i + 1)} className={styles.beat} data-beat={b.id}>
+                {PRINT_STILLS.has(b.id) && <PrintStill frame={STILLS[b.id]} className={styles.printStill} />}
                 {b.stage && (
                   <p className={styles.stage} data-stage={b.stage}>
                     {f.stages[b.stage]}

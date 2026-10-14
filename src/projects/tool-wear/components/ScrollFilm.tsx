@@ -21,6 +21,7 @@ import {
   zoomAt,
 } from "@/projects/tool-wear/lib/film";
 import { createFrameLoader } from "@/lib/filmFrames";
+import PrintStill from "@/lib/PrintStill";
 import { FIELDS, FIG5 } from "@/projects/tool-wear/content/paper";
 import { FieldList, RuleCard } from "./ui";
 import styles from "./ScrollFilm.module.css";
@@ -254,6 +255,7 @@ export default function ScrollFilm() {
         <div ref={dimRef} className={styles.dim} aria-hidden="true" />
 
         <div ref={setBeat(0)} className={styles.titleCard}>
+          <PrintStill frame={1} className={styles.printCover} />
           <h1 className={styles.title}>{f.title}</h1>
           <p className={styles.subtitle}>{f.subtitle}</p>
           <p className={styles.paperLine}>
@@ -272,6 +274,7 @@ export default function ScrollFilm() {
             <p className={styles.beatP}>{f.problem.p}</p>
           </div>
           <div ref={setBeat(2)} className={styles.beat}>
+            <PrintStill frame={STILLS.collect} className={styles.printStill} />
             <p className={styles.stage}>{f.collect.stage}</p>
             <h2 className={styles.beatH}>{f.collect.h}</h2>
             <p className={styles.beatP}>{f.collect.p}</p>
@@ -287,6 +290,7 @@ export default function ScrollFilm() {
             <RuleCard label={f.dataset.ruleLabel} className={styles.rule} />
           </div>
           <div ref={setBeat(5)} className={styles.beat}>
+            <PrintStill frame={STILLS.model} className={styles.printStill} />
             <p className={styles.stage}>{f.model.stage}</p>
             <h2 className={styles.beatH}>{f.model.h}</h2>
             <p className={styles.beatP}>{f.model.p}</p>
@@ -295,6 +299,7 @@ export default function ScrollFilm() {
             </p>
           </div>
           <div ref={setBeat(6)} className={styles.beat}>
+            <PrintStill frame={STILLS.alert} className={styles.printStill} />
             <h2 className={styles.beatH}>{f.alert.h}</h2>
             <p className={styles.beatP}>{f.alert.p}</p>
             <p className={styles.inlineHud}>

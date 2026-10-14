@@ -362,3 +362,67 @@ kbd {
 .skip-link:focus {
   transform: none;
 }
+
+/* ----------------------------------------------------------------- print / PDF
+   For Ctrl+P, and for scripts/make-pdf.mjs, which prints every page into the downloadable
+   PDFs. The page keeps its dark look edge to edge. An element leaves the printed page with
+   data-print="hide"; a closed <details> is left out unless it is marked data-print="open",
+   which the PDF script opens. Each component adds its own rules (the films, the landing
+   page) in its stylesheet. */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  :root {
+    --section-gap: 80px;
+  }
+
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    scroll-behavior: auto;
+  }
+
+  [data-print="hide"],
+  .skip-link {
+    display: none !important;
+  }
+
+  details:not([open]) {
+    display: none;
+  }
+
+  /* A heading, or a header that starts with one, stays with what follows it. */
+  h1,
+  h2,
+  h3,
+  h4,
+  header,
+  :is(div, header):has(> :is(h2, h3):first-child) {
+    break-after: avoid;
+  }
+
+  header {
+    break-inside: avoid;
+  }
+
+  img,
+  svg,
+  figure,
+  table,
+  tr,
+  pre,
+  blockquote {
+    break-inside: avoid;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    transition: none !important;
+  }
+}

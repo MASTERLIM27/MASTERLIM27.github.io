@@ -296,7 +296,7 @@ export const en = {
   cite: {
     h: "Read and cite",
     p: "The paper is open access under the Creative Commons Attribution Non-Commercial license (CC BY-NC 4.0).",
-    links: { doi: "Read the paper", doiShort: "DOI 10.7236/IJIBC.2026.18.1.361" },
+    links: { doi: "Read the paper", pdf: "PDF", doiShort: "DOI 10.7236/IJIBC.2026.18.1.361" },
     citation: "Citation",
     bibtex: "BibTeX",
     copy: "Copy",
@@ -603,7 +603,7 @@ export const ko: Dict = {
   cite: {
     h: "논문 보기와 인용",
     p: "이 논문은 크리에이티브 커먼즈 저작자표시-비영리 라이선스(CC BY-NC 4.0)로 공개되어 있습니다.",
-    links: { doi: "논문 읽기", doiShort: "DOI 10.7236/IJIBC.2026.18.1.361" },
+    links: { doi: "논문 읽기", pdf: "PDF", doiShort: "DOI 10.7236/IJIBC.2026.18.1.361" },
     citation: "인용",
     bibtex: "BibTeX",
     copy: "복사",

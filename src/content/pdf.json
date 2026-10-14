@@ -1,0 +1,17 @@
+{
+  "dir": "pdf",
+  "files": [
+    {
+      "lang": "en",
+      "name": "Andreas-Lim-Portfolio-EN.pdf",
+      "title": "Andreas Lim — Portfolio",
+      "subject": "Published AI work: films, demos and results from each paper's project page"
+    },
+    {
+      "lang": "ko",
+      "name": "Andreas-Lim-Portfolio-KO.pdf",
+      "title": "림 안드레아스 — 포트폴리오",
+      "subject": "발표한 AI 연구: 각 논문의 프로젝트 페이지에 담긴 영상, 데모, 결과"
+    }
+  ]
+}

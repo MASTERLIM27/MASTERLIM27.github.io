@@ -224,35 +224,171 @@ html:lang(ko) .lead {
   line-height: 1.5;
 }
 
+/* Contact links: icon pills in the hero ("inline"), cards in the contact section ("cards"). */
 .contact {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 28px;
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
+  gap: 8px;
 }
 
 .contact a {
-  display: inline-block;
-  padding-block: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: var(--ink);
-  text-decoration: underline;
-  text-decoration-color: var(--accent-line);
-  text-underline-offset: 5px;
-  overflow-wrap: anywhere;
+  text-decoration: none;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.contactIcon {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
   transition: color 160ms ease;
 }
 
-.contact a:hover {
+.contactIcon svg {
+  display: block;
+  width: 17px;
+  height: 17px;
+}
+
+.contactText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.contactHandle {
+  overflow-wrap: anywhere;
+}
+
+.contact[data-look="inline"] a {
+  min-height: 40px;
+  padding: 0 15px 0 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(7, 6, 5, 0.55);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.contact[data-look="inline"] a:hover {
+  border-color: var(--accent-line);
+}
+
+.contact[data-look="inline"] a:hover .contactIcon {
   color: var(--accent);
-  text-decoration-color: currentColor;
+}
+
+/* The pill shows the handle; the service is still read out with it. */
+.contact[data-look="inline"] .contactService {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.contact[data-look="cards"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 720px) {
+  .contact[data-look="cards"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.contact[data-look="cards"] a {
+  width: 100%;
+  height: 100%;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--char-1);
+}
+
+.contact[data-look="cards"] a:hover {
+  border-color: var(--accent-line);
+  background: var(--char-2);
+}
+
+.contact[data-look="cards"] .contactIcon {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--char-2);
+  color: var(--accent);
+}
+
+.contact[data-look="cards"] .contactIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.contact[data-look="cards"] .contactService {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.contact[data-look="cards"] .contactHandle {
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+/* Hero buttons: into the gallery, and the whole site as PDF. */
+.actions {
+  margin-top: clamp(6px, 1.6vw, 20px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px 14px;
+}
+
+.pdfButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 22px 0 18px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: var(--step--1);
+  font-weight: 650;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.pdfButton:hover {
+  background: #f0c878;
+  border-color: #f0c878;
+}
+
+.pdfIcon {
+  width: 18px;
+  height: 18px;
 }
 
 .cue {
-  margin-top: clamp(6px, 1.6vw, 20px);
   display: inline-flex;
   align-items: center;
   gap: 12px;
@@ -862,16 +998,22 @@ html:lang(ko) .paperVenue {
   scroll-margin-top: var(--nav-h);
 }
 
-.footerTop {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px 40px;
-  margin-bottom: 28px;
+.contactBlock {
+  display: grid;
+  gap: clamp(20px, 3vw, 30px);
+  padding-bottom: clamp(40px, 6vw, 64px);
+  margin-bottom: clamp(28px, 4vw, 40px);
+  border-bottom: 1px solid var(--line);
+}
+
+.contactHead {
+  display: grid;
+  gap: 14px;
+  max-width: var(--measure);
 }
 
 .footerBrand {
+  margin-bottom: 14px;
   font-family: var(--font-display);
   font-size: clamp(2rem, 1rem + 4vw, 3.5rem);
   font-weight: 700;
@@ -914,5 +1056,73 @@ html:lang(ko) .footerBrand {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------- print / PDF
+   The hero is the cover page; the wall, the papers and the contact cards follow. */
+@media print {
+  .page [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .hero {
+    min-height: 100vh;
+    break-after: page;
+  }
+
+  .heroArt {
+    transform: none;
+  }
+
+  .chipOn {
+    opacity: 1;
+  }
+
+  /* Hidden under the lit chip on screen; on paper it would only add weight. */
+  .chipOff {
+    display: none;
+  }
+
+  .section {
+    padding-top: 72px;
+  }
+
+  /* CSS modules rename ids, so the sections are matched by attribute. */
+  .section[id="gallery"] {
+    padding-top: 64px;
+  }
+
+  .section[id="papers"] {
+    break-before: page;
+  }
+
+  .tile,
+  .paper,
+  .contactBlock,
+  .head {
+    break-inside: avoid;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+  /* The papers, the contact cards and the notes share the last page. */
+  .footer {
+    margin-top: 40px;
+    padding-block: 36px 28px;
+  }
+
+  .contactBlock {
+    gap: 20px;
+    padding-bottom: 32px;
+    margin-bottom: 24px;
+  }
+
+  .footerBrand {
+    font-size: 2.25rem;
+    margin-bottom: 10px;
   }
 }

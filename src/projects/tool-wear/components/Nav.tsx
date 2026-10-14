@@ -27,7 +27,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <header className={s.bar} data-solid={solid}>
+    <header className={s.bar} data-solid={solid} data-print="hide">
       {/* Added for the merged portfolio: a way back to the landing page. */}
       <a className={s.back} href="../" aria-label={BACK.aria[lang]}>
         <span className={s.backArrow} aria-hidden="true">←</span>

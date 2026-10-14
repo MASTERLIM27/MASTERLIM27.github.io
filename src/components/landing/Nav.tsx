@@ -28,7 +28,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <header className={s.bar} data-solid={solid}>
+    <header className={s.bar} data-solid={solid} data-print="hide">
       <a className={s.brand} href="#top">
         <span className={s.mark} aria-hidden="true" />
         {t.brand}

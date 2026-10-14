@@ -1,10 +1,11 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react";
+import { Fragment, useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 import { useLangState } from "@/lib/lang";
-import { CONTACT, PAPERS, PROJECT_NAME, TILES, landing, type Tile } from "@/content/landing";
+import { CONTACT, PAPERS, PDF, PROJECT_NAME, TILES, landing, type LandingDict, type Tile } from "@/content/landing";
 import type { Lang } from "@/lib/types";
 import Nav from "./Nav";
+import { DownloadIcon, GitHubIcon, GmailIcon, LinkedInIcon } from "./icons";
 import s from "./Landing.module.css";
 
 const FILTERS = ["all", "project", "demo", "film", "result"] as const;
@@ -87,18 +88,60 @@ function useLean() {
   return ref;
 }
 
-function ContactLinks({ label }: { label: string }) {
+const CONTACT_LINKS = [
+  { service: "Gmail", href: `mailto:${CONTACT.email}`, text: CONTACT.email, Icon: GmailIcon, external: false },
+  { service: "GitHub", href: CONTACT.github.href, text: CONTACT.github.label, Icon: GitHubIcon, external: true },
+  { service: "LinkedIn", href: CONTACT.linkedin.href, text: CONTACT.linkedin.label, Icon: LinkedInIcon, external: true },
+];
+
+/** "inline" in the hero; "cards" in the contact section. */
+function ContactLinks({ label, look }: { label: string; look: "inline" | "cards" }) {
   return (
-    <ul className={s.contact} aria-label={label}>
-      <li>
-        <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-      </li>
-      <li>
-        <a href={CONTACT.github.href} target="_blank" rel="noopener noreferrer">
-          {CONTACT.github.label}
-        </a>
-      </li>
+    <ul className={s.contact} data-look={look} aria-label={label}>
+      {CONTACT_LINKS.map(({ service, href, text, Icon, external }) => (
+        <li key={service}>
+          <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+            <span className={s.contactIcon}>
+              <Icon />
+            </span>
+            <span className={s.contactText}>
+              <span className={s.contactService}>{service}</span>
+              <span className={s.contactHandle}>{text}</span>
+            </span>
+          </a>
+        </li>
+      ))}
     </ul>
+  );
+}
+
+/**
+ * One button for the whole site as PDF, in both languages: it starts the English and the
+ * Korean download together. Some browsers ask once before letting a page start a second
+ * download.
+ */
+function PdfDownload({ t }: { t: LandingDict }) {
+  const both = (e: MouseEvent) => {
+    e.preventDefault();
+    PDF.files.forEach((f, i) => {
+      const start = () => {
+        const a = document.createElement("a");
+        a.href = f.href;
+        a.download = f.name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      };
+      if (i === 0) start();
+      else window.setTimeout(start, 400 * i);
+    });
+  };
+
+  return (
+    <a className={s.pdfButton} href={PDF.files[0].href} download={PDF.files[0].name} onClick={both}>
+      <DownloadIcon className={s.pdfIcon} />
+      <span>{t.pdf.button}</span>
+    </a>
   );
 }
 
@@ -203,13 +246,16 @@ export default function Landing() {
               ))}
             </h1>
             <p className={s.lead}>{t.hero.lead}</p>
-            <ContactLinks label={t.contact} />
-            <a className={s.cue} href="#gallery">
-              <span>{t.hero.cue}</span>
-              <span className={s.cueArrow} aria-hidden="true">
-                ↓
-              </span>
-            </a>
+            <ContactLinks label={t.contact} look="inline" />
+            <div className={s.actions} data-print="hide">
+              <a className={s.cue} href="#gallery">
+                <span>{t.hero.cue}</span>
+                <span className={s.cueArrow} aria-hidden="true">
+                  ↓
+                </span>
+              </a>
+              <PdfDownload t={t} />
+            </div>
           </div>
         </section>
 
@@ -220,7 +266,7 @@ export default function Landing() {
               <p className={s.body}>{t.gallery.p}</p>
             </header>
 
-            <div className={s.filters} role="group" aria-label={t.gallery.filter} data-reveal="hidden">
+            <div className={s.filters} role="group" aria-label={t.gallery.filter} data-reveal="hidden" data-print="hide">
               {FILTERS.map((f) => (
                 <button
                   key={f}
@@ -298,12 +344,18 @@ export default function Landing() {
 
       <footer className={s.footer} id="contact">
         <div className={s.frame}>
-          <div className={s.footerTop}>
-            <p className={s.footerBrand}>{t.brand}</p>
-            <ContactLinks label={t.contact} />
+          <div className={s.contactBlock} data-reveal="hidden">
+            <div className={s.contactHead}>
+              <h2 className={s.h2}>{t.contactSection.h}</h2>
+              <p className={s.body}>{t.contactSection.p}</p>
+            </div>
+            <ContactLinks label={t.contact} look="cards" />
           </div>
-          <p className={s.footNote}>{t.footer.note}</p>
-          <p className={s.footNote}>{t.footer.papers}</p>
+          <div className={s.footerBottom}>
+            <p className={s.footerBrand}>{t.brand}</p>
+            <p className={s.footNote}>{t.footer.note}</p>
+            <p className={s.footNote}>{t.footer.papers}</p>
+          </div>
         </div>
       </footer>
     </div>

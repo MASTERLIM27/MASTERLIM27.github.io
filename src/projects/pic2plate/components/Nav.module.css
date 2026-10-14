@@ -27,12 +27,26 @@
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-display);
   font-size: 1.1875rem;
   font-weight: 650;
   letter-spacing: -0.02em;
   text-decoration: none;
+  white-space: nowrap;
   margin-right: auto;
+}
+
+/* A small lamp in the page's amber, like the lamps on the other two project bars. */
+.mark {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
 }
 
 .links {
